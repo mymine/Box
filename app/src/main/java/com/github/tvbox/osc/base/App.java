@@ -1,6 +1,7 @@
 package com.github.tvbox.osc.base;
 
 import androidx.multidex.MultiDexApplication;
+import com.undcover.freedom.pyramid.PythonLoader;
 
 import com.github.tvbox.osc.callback.EmptyCallback;
 import com.github.tvbox.osc.callback.LoadingCallback;
