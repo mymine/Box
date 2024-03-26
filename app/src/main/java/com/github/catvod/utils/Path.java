@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.github.catvod.Init;
+import io.github.pixee.security.SystemCommand;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -231,7 +232,7 @@ public class Path {
 
     public static File chmod(File file) {
         try {
-            Process process = Runtime.getRuntime().exec("chmod 777 " + file);
+            Process process = SystemCommand.runCommand(Runtime.getRuntime(), "chmod 777 " + file);
             process.waitFor();
             return file;
         } catch (Exception e) {
