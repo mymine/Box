@@ -30,6 +30,7 @@ package com.github.tvbox.osc.subtitle.format;
 import com.github.tvbox.osc.subtitle.model.Subtitle;
 import com.github.tvbox.osc.subtitle.model.Time;
 import com.github.tvbox.osc.subtitle.model.TimedTextObject;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class FormatSRT implements TimedTextFileFormat {
         //the file name is saved
         tto.fileName = fileName;
 
-        String line = br.readLine();
+        String line = BoundedLineReader.readLine(br, 5_000_000);
         int lineCounter = 0;
         try {
             while (line != null) {
@@ -82,7 +83,7 @@ public class FormatSRT implements TimedTextFileFormat {
                         //we go to next line, here the begin and end time should be found
                         try {
                             lineCounter++;
-                            line = br.readLine().trim();
+                            line = BoundedLineReader.readLine(br, 5_000_000).trim();
                             String start = line.substring(0, 12);
                             String end = line.substring(line.length() - 12);
                             Time time = new Time("hh:mm:ss,ms", start);
@@ -97,11 +98,11 @@ public class FormatSRT implements TimedTextFileFormat {
                     if (allGood) {
                         //we go to next line where the caption text starts
                         lineCounter++;
-                        line = br.readLine().trim();
+                        line = BoundedLineReader.readLine(br, 5_000_000).trim();
                         String text = "";
                         while (!line.isEmpty()) {
                             text += line + "<br />";
-                            line = br.readLine().trim();
+                            line = BoundedLineReader.readLine(br, 5_000_000).trim();
                             lineCounter++;
                         }
                         caption.content = text;
@@ -115,12 +116,12 @@ public class FormatSRT implements TimedTextFileFormat {
                     }
                     //we go to next blank
                     while (!line.isEmpty()) {
-                        line = br.readLine().trim();
+                        line = BoundedLineReader.readLine(br, 5_000_000).trim();
                         lineCounter++;
                     }
                     caption = new Subtitle();
                 }
-                line = br.readLine();
+                line = BoundedLineReader.readLine(br, 5_000_000);
             }
 
         } catch (NullPointerException e) {

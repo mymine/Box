@@ -31,6 +31,7 @@ import com.github.tvbox.osc.subtitle.model.Style;
 import com.github.tvbox.osc.subtitle.model.Subtitle;
 import com.github.tvbox.osc.subtitle.model.Time;
 import com.github.tvbox.osc.subtitle.model.TimedTextObject;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class FormatASS implements TimedTextFileFormat {
         int lineCounter = 0;
         try {
             //we scour the file
-            line = br.readLine();
+            line = BoundedLineReader.readLine(br, 5_000_000);
             lineCounter++;
             while (line != null) {
                 line = line.trim();
@@ -77,7 +78,7 @@ public class FormatASS implements TimedTextFileFormat {
                     if (line.equalsIgnoreCase("[Script info]")) {
                         //its the script info section section
                         lineCounter++;
-                        line = br.readLine().trim();
+                        line = BoundedLineReader.readLine(br, 5_000_000).trim();
                         //Each line is scanned for useful info until a new section is detected
                         while (!line.startsWith("[")) {
                             if (line.startsWith("Title:")) { //标题信息非必要
@@ -100,7 +101,7 @@ public class FormatASS implements TimedTextFileFormat {
                                 timer = Float.parseFloat(line.split(":")[1].trim().replace(',', '.'));
                             //we go to the next line
                             lineCounter++;
-                            line = br.readLine().trim();
+                            line = BoundedLineReader.readLine(br, 5_000_000).trim();
                         }
 
                     } else if (line.equalsIgnoreCase("[v4 Styles]")
@@ -113,26 +114,26 @@ public class FormatASS implements TimedTextFileFormat {
                             tto.warnings += "ScriptType should be set to v4:00+ in the [Script Info] section.\n\n";
                         }
                         lineCounter++;
-                        line = br.readLine();
+                        line = BoundedLineReader.readLine(br, 5_000_000);
                         //the first line should define the format
                         if (!line.startsWith("Format:")) {
                             //if not, we scan for the format.
                             tto.warnings += "Format: (format definition) expected at line " + line + " for the styles section\n\n";
                             while (!line.startsWith("Format:")) {
                                 lineCounter++;
-                                line = br.readLine();
+                                line = BoundedLineReader.readLine(br, 5_000_000);
                             }
                         }
                         // we recover the format's fields
                         styleFormat = line.split(":")[1].trim().split(",");
                         lineCounter++;
-                        line = br.readLine();
+                        line = BoundedLineReader.readLine(br, 5_000_000);
                         // we parse each style until we reach a new section
                         while (!line.startsWith("Style:")) {
                             tto.warnings += "Style: (format definition) expected at line " + line + " for the styles section\n\n";
                             //next line
                             lineCounter++;
-                            line = br.readLine();
+                            line = BoundedLineReader.readLine(br, 5_000_000);
                         }
                         //we parse the style
                         style = parseStyleForASS(line.split(":")[1].trim().split(","), styleFormat, lineCounter, isASS, tto.warnings);
@@ -142,7 +143,7 @@ public class FormatASS implements TimedTextFileFormat {
                     } else if (line.trim().equalsIgnoreCase("[Events]")) {
                         //its the events specification section
                         lineCounter++;
-                        line = br.readLine();
+                        line = BoundedLineReader.readLine(br, 5_000_000);
                         tto.warnings += "Only dialogue events are considered, all other events are ignored.\n\n";
                         //the first line should define the format of the dialogues
                         if (!line.startsWith("Format:")) {
@@ -150,14 +151,14 @@ public class FormatASS implements TimedTextFileFormat {
                             tto.warnings += "Format: (format definition) expected at line " + line + " for the events section\n\n";
                             while (!line.startsWith("Format:")) {
                                 lineCounter++;
-                                line = br.readLine();
+                                line = BoundedLineReader.readLine(br, 5_000_000);
                             }
                         }
                         // we recover the format's fields
                         dialogueFormat = line.split(":")[1].trim().split(",");
                         //next line
                         lineCounter++;
-                        line = br.readLine();
+                        line = BoundedLineReader.readLine(br, 5_000_000);
                         // we parse each style until we reach a new section
                         while (!line.startsWith("[")) {
                             //we check it is a dialogue
@@ -173,7 +174,7 @@ public class FormatASS implements TimedTextFileFormat {
                             }
                             //next line
                             lineCounter++;
-                            line = br.readLine();
+                            line = BoundedLineReader.readLine(br, 5_000_000);
                         }
 
                     } else if (line.trim().equalsIgnoreCase("[Fonts]") || line.trim().equalsIgnoreCase("[Graphics]")) {
@@ -184,7 +185,7 @@ public class FormatASS implements TimedTextFileFormat {
                         tto.warnings += "Unrecognized section: " + line.trim() + " all information there is ignored.";
                     }
                 }
-                line = br.readLine();
+                line = BoundedLineReader.readLine(br, 5_000_000);
                 lineCounter++;
             }
             // parsed styles that are not used should be eliminated

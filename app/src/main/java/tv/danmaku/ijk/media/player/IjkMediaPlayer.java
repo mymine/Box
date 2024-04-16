@@ -44,6 +44,7 @@ import android.view.SurfaceHolder;
 
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.util.FileUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -438,7 +439,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
                             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                             String str = "";
                             while (true) {
-                                String readLine = bufferedReader.readLine();
+                                String readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                                 if (readLine == null) {
                                     break;
                                 }

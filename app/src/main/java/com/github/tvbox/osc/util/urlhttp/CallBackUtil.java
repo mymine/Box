@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -242,7 +243,7 @@ public abstract class CallBackUtil<T> {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
             StringBuilder sb = new StringBuilder();
             String line = "";
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 sb.append(line + "\n");
             }
             is.close();

@@ -32,6 +32,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.orhanobut.hawk.Hawk;
+import io.github.pixee.security.BoundedLineReader;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -296,7 +297,7 @@ public class ApiConfig {
         BufferedReader bReader = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"));
         StringBuilder sb = new StringBuilder();
         String s = "";
-        while ((s = bReader.readLine()) != null) {
+        while ((s = BoundedLineReader.readLine(bReader, 5_000_000)) != null) {
             sb.append(s + "\n");
         }
         bReader.close();

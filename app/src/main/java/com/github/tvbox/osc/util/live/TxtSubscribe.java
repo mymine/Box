@@ -2,6 +2,7 @@ package com.github.tvbox.osc.util.live;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -31,14 +32,14 @@ public class TxtSubscribe {
             LinkedHashMap<String, ArrayList<String>> channel = new LinkedHashMap<>();
             LinkedHashMap<String, ArrayList<String>> channelTemp = channel;
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
                 if (line.equals("")) continue;
                 if (line.startsWith("#EXTM3U")) continue;
                 if (line.startsWith("#EXTINF")) {
                     String name = getStrByRegex(NAME_PATTERN, line);
                     String group = getStrByRegex(GROUP_PATTERN, line);
                     // 此时再读取一行，就是对应的 url 链接了
-                    String url = bufferedReader.readLine().trim();
+                    String url = BoundedLineReader.readLine(bufferedReader, 5_000_000).trim();
                     if (linkedHashMap.containsKey(group)) {
                         channelTemp = linkedHashMap.get(group);
                     } else {
@@ -72,16 +73,16 @@ public class TxtSubscribe {
         ArrayList<String> arrayList;
         try {
             BufferedReader bufferedReader = new BufferedReader(new StringReader(str));
-            String readLine = bufferedReader.readLine();
+            String readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
             LinkedHashMap<String, ArrayList<String>> linkedHashMap2 = new LinkedHashMap<>();
             LinkedHashMap<String, ArrayList<String>> linkedHashMap3 = linkedHashMap2;
             while (readLine != null) {
                 if (readLine.trim().isEmpty()) {
-                    readLine = bufferedReader.readLine();
+                    readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                 } else {
                     String[] split = readLine.split(",");
                     if (split.length < 2) {
-                        readLine = bufferedReader.readLine();
+                        readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                     } else {
                         if (readLine.contains("#genre#")) {
                             String trim = split[0].trim();
@@ -108,7 +109,7 @@ public class TxtSubscribe {
                                 }
                             }
                         }
-                        readLine = bufferedReader.readLine();
+                        readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                     }
                 }
             }
