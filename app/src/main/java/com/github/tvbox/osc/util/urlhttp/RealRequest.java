@@ -1,6 +1,8 @@
 package com.github.tvbox.osc.util.urlhttp;
 
 import android.text.TextUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -110,7 +112,7 @@ import java.util.Map;
      * 得到Connection对象，并进行一些设置
      */
     private HttpURLConnection getHttpURLConnection(String requestURL,String requestMethod) throws IOException {
-        URL url = new URL(requestURL);
+        URL url = Urls.create(requestURL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(10*1000);
         conn.setReadTimeout(15*1000);

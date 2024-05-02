@@ -44,6 +44,8 @@ import android.view.SurfaceHolder;
 
 import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.util.FileUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -427,7 +429,7 @@ public final class IjkMediaPlayer extends AbstractMediaPlayer {
             new Thread() {
                 public void run() {
                     try {
-                        HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(path).openConnection();
+                        HttpURLConnection httpURLConnection = (HttpURLConnection) Urls.create(path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).openConnection();
                         httpURLConnection.setRequestMethod("GET");
                         httpURLConnection.setDoInput(true);
                         httpURLConnection.setUseCaches(false);

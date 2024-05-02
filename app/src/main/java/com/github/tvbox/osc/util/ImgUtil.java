@@ -25,6 +25,8 @@ import com.github.tvbox.osc.base.App;
 import com.google.common.net.HttpHeaders;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -185,7 +187,7 @@ public class ImgUtil {
         }
 
         try {
-            URL imgUrl = new URL(url);
+            URL imgUrl = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             String host = imgUrl.getHost();
             builder.addHeader(HttpHeaders.HOST, host);
         } catch (MalformedURLException e) {

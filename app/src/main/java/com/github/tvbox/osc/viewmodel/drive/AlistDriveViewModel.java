@@ -10,6 +10,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.PostRequest;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,7 +44,7 @@ public class AlistDriveViewModel extends AbstractDriveViewModel {
         String str2;
         if (str != null) {
             try {
-                URL url = new URL(str);
+                URL url = Urls.create(str, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 if (url.getPort() > 0) {
                     str2 = ":" + url.getPort();
                 } else {

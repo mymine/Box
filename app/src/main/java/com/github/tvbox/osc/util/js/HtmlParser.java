@@ -2,6 +2,8 @@ package com.github.tvbox.osc.util.js;
 
 import android.text.TextUtils;
 import com.github.tvbox.osc.util.StringUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,7 +37,7 @@ public class HtmlParser {
         URL url;
         String q = parent;
         try {
-            url = new URL(new URL(parent), child);
+            url = Urls.create(Urls.create(parent, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), child, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             q = url.toExternalForm();
         } catch (MalformedURLException e) {
             e.printStackTrace();
