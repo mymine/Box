@@ -1322,7 +1322,7 @@ public class PlayFragment extends BaseLazyFragment {
                         Iterator<String> keys = headerJson.keys();
                         while (keys.hasNext()) {
                             String key = keys.next();
-                            if (key.equalsIgnoreCase("user-agent")) {
+                            if ("user-agent".equalsIgnoreCase(key)) {
                                 webUserAgent = headerJson.getString(key).trim();
                             } else {
                                 reqHeaders.put(key, headerJson.optString(key, ""));
@@ -1875,9 +1875,9 @@ public class PlayFragment extends BaseLazyFragment {
             Map<String, String> hds = request.getRequestHeaders();
             if (hds != null && hds.keySet().size() > 0) {
                 for (String k : hds.keySet()) {
-                    if (k.equalsIgnoreCase("user-agent")
-                            || k.equalsIgnoreCase("referer")
-                            || k.equalsIgnoreCase("origin")) {
+                    if ("user-agent".equalsIgnoreCase(k)
+                            || "referer".equalsIgnoreCase(k)
+                            || "origin".equalsIgnoreCase(k)) {
                         webHeaders.put(k," " + hds.get(k));
                     }
                 }
@@ -2014,9 +2014,9 @@ public class PlayFragment extends BaseLazyFragment {
                     Map<String, String> hds = request.getRequestHeaders();
                     if (hds != null && hds.keySet().size() > 0) {
                         for (String k : hds.keySet()) {
-                            if (k.equalsIgnoreCase("user-agent")
-                                    || k.equalsIgnoreCase("referer")
-                                    || k.equalsIgnoreCase("origin")) {
+                            if ("user-agent".equalsIgnoreCase(k)
+                                    || "referer".equalsIgnoreCase(k)
+                                    || "origin".equalsIgnoreCase(k)) {
                                 webHeaders.put(k, " " + hds.get(k));
                             }
                         }

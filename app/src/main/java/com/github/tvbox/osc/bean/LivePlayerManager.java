@@ -78,7 +78,7 @@ public class LivePlayerManager {
                     playerTypeIndex = 0;
                     break;
                 case 1:
-                    if (ijkCodec.equals("硬解码"))
+                    if ("硬解码".equals(ijkCodec))
                         playerTypeIndex = 1;
                     else
                         playerTypeIndex = 2;

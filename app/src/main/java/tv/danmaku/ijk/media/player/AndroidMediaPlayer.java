@@ -105,7 +105,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer {
 
         Uri uri = Uri.parse(path);
         String scheme = uri.getScheme();
-        if (!TextUtils.isEmpty(scheme) && scheme.equalsIgnoreCase("file")) {
+        if (!TextUtils.isEmpty(scheme) && "file".equalsIgnoreCase(scheme)) {
             mInternalMediaPlayer.setDataSource(uri.getPath());
         } else {
             mInternalMediaPlayer.setDataSource(path);

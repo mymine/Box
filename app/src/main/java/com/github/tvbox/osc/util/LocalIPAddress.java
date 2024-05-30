@@ -31,7 +31,7 @@ public class LocalIPAddress {
                 while (enumerationNi.hasMoreElements()) {
                     NetworkInterface networkInterface = enumerationNi.nextElement();
                     String interfaceName = networkInterface.getDisplayName();
-                    if (interfaceName.equals("eth0") || interfaceName.equals("wlan0")) {
+                    if ("eth0".equals(interfaceName) || "wlan0".equals(interfaceName)) {
                         Enumeration<InetAddress> enumIpAddr = networkInterface.getInetAddresses();
                         while (enumIpAddr.hasMoreElements()) {
                             InetAddress inetAddress = enumIpAddr.nextElement();
@@ -137,13 +137,13 @@ public class LocalIPAddress {
         for (NetworkInfo net : netInfos) {
 
             String type = net.getTypeName();
-            if (type.equalsIgnoreCase("WIFI")) {
+            if ("WIFI".equalsIgnoreCase(type)) {
                 if (net.isConnected()) {
                     hasWifoCon = true;
                 }
             }
 
-            if (type.equalsIgnoreCase("MOBILE")) {
+            if ("MOBILE".equalsIgnoreCase(type)) {
                 if (net.isConnected()) {
                     hasMobileCon = true;
                 }

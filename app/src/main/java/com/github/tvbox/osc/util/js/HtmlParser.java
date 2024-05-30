@@ -102,7 +102,7 @@ public class HtmlParser {
             ":eq", ":lt", ":gt", ":first", ":last", "body", "#"
         }) {
             if (str.contains(str2)) {
-                if (str2.equals("body") || str2.equals("#")) {
+                if ("body".equals(str2) || "#".equals(str2)) {
                     return str.startsWith(str2);
                 }
                 return true;
@@ -170,9 +170,9 @@ public class HtmlParser {
             pdfh_doc = Jsoup.parse(html);
         }
         Document doc = pdfh_doc;
-        if (rule.equals("body&&Text") || rule.equals("Text")) {
+        if ("body&&Text".equals(rule) || "Text".equals(rule)) {
             return doc.text();
-        } else if (rule.equals("body&&Html") || rule.equals("Html")) {
+        } else if ("body&&Html".equals(rule) || "Html".equals(rule)) {
             return doc.html();
         }
         String option = "";
