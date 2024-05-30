@@ -450,7 +450,7 @@ public class ApiConfig {
                         JsonObject fengMiLives = infoJson.get("lives").getAsJsonArray().get(0).getAsJsonObject();
                         Hawk.put(HawkConfig.LIVE_PLAYER_TYPE, DefaultConfig.safeJsonInt(fengMiLives, "playerType", -1));
                         String type = fengMiLives.get("type").getAsString();
-                        if (type.equals("0")) {
+                        if ("0".equals(type)) {
                             String url = fengMiLives.get("url").getAsString();
 
                             // takagen99 : Getting EPG URL from File Config & put into Settings

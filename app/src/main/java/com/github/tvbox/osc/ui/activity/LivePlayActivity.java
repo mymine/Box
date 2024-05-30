@@ -1700,7 +1700,7 @@ public class LivePlayActivity extends BaseActivity {
         try {
             Uri parsedUrl = Uri.parse(url);
             url = new String(Base64.decode(parsedUrl.getQueryParameter("ext"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP), "UTF-8");
-            if (url.equals("")) {
+            if ("".equals(url)) {
                 Toast.makeText(App.getInstance(), getString(R.string.act_live_play_empty_live_url), Toast.LENGTH_LONG).show();
                 finish();
                 return;

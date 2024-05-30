@@ -297,19 +297,19 @@ public class FormatSTL implements TimedTextFileFormat {
 
                 //colors
                 String color = style.color.substring(0, 6);
-                if (color.equalsIgnoreCase("000000"))
+                if ("000000".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x00;
-                else if (color.equalsIgnoreCase("0000ff"))
+                else if ("0000ff".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x04;
-                else if (color.equalsIgnoreCase("00ffff"))
+                else if ("00ffff".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x06;
-                else if (color.equalsIgnoreCase("00ff00"))
+                else if ("00ff00".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x02;
-                else if (color.equalsIgnoreCase("ff0000"))
+                else if ("ff0000".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x01;
-                else if (color.equalsIgnoreCase("ffff00"))
+                else if ("ffff00".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x03;
-                else if (color.equalsIgnoreCase("ff00ff"))
+                else if ("ff00ff".equalsIgnoreCase(color))
                     ttiBlock[pos++] = (byte) 0x05;
                 else ttiBlock[pos++] = (byte) 0x07;
 

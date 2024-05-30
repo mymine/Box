@@ -482,19 +482,19 @@ public class FormatTTML implements TimedTextFileFormat {
             double time;
             try {
                 time = Double.parseDouble(timeExpression);
-                if (metric.equalsIgnoreCase("h"))
+                if ("h".equalsIgnoreCase(metric))
                     mSeconds = (int) (time * 3600000);
 
-                else if (metric.equalsIgnoreCase("m"))
+                else if ("m".equalsIgnoreCase(metric))
                     mSeconds = (int) (time * 60000);
 
-                else if (metric.equalsIgnoreCase("s"))
+                else if ("s".equalsIgnoreCase(metric))
                     mSeconds = (int) (time * 1000);
 
-                else if (metric.equalsIgnoreCase("ms"))
+                else if ("ms".equalsIgnoreCase(metric))
                     mSeconds = (int) time;
 
-                else if (metric.equalsIgnoreCase("f")) {
+                else if ("f".equalsIgnoreCase(metric)) {
                     int frameRate;
                     //we recover the frame rate
                     Node n = doc.getElementsByTagName("ttp:frameRate").item(0);
@@ -505,7 +505,7 @@ public class FormatTTML implements TimedTextFileFormat {
                         mSeconds = (int) (time * 1000 / frameRate);
                     }
 
-                } else if (metric.equalsIgnoreCase("t")) {
+                } else if ("t".equalsIgnoreCase(metric)) {
                     int tickRate;
                     //we recover the tick rate
                     Node n = doc.getElementsByTagName("ttp:tickRate").item(0);

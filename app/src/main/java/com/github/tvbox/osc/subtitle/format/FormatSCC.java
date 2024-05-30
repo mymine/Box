@@ -70,7 +70,7 @@ public class FormatSCC implements TimedTextFileFormat {
 
             lineCounter++;
             // the file must start with the type declaration
-            if (!br.readLine().trim().equalsIgnoreCase("Scenarist_SCC V1.0")) {
+            if (!"Scenarist_SCC V1.0".equalsIgnoreCase(br.readLine().trim())) {
                 // this is a fatal parsing error.
                 throw new FatalParsingException(
                         "The fist line should define the file type: \"Scenarist_SCC V1.0\"");

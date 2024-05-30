@@ -47,9 +47,9 @@ public class BrotliInterceptor implements Interceptor {
             String encoding = response.header("Content-Encoding");
             if (isNotEmpty(encoding)) {
                 Source brotliSource;
-                if (encoding.equals("br")) {
+                if ("br".equals(encoding)) {
                     brotliSource = BrotliSource.create(body.source());
-                } else if (encoding.equals("gzip")) {
+                } else if ("gzip".equals(encoding)) {
                     brotliSource = new GzipSource(body.source());
                 } else {
                     return response;

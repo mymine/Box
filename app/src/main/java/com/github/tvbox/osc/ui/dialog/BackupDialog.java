@@ -138,7 +138,7 @@ public class BackupDialog extends BaseDialog {
                         while (it.hasNext()) {
                             String key = it.next();
                             String value = jsonObject.getString(key);
-                            if (key.equals("cipher_key")) {
+                            if ("cipher_key".equals(key)) {
                                 App.getInstance().getSharedPreferences("crypto.KEY_256", Context.MODE_PRIVATE).edit().putString(key, value).commit();
                             } else {
                                 sharedPreferences.edit().putString(key, value).commit();

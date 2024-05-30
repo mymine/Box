@@ -393,7 +393,7 @@ public class SearchActivity extends BaseActivity {
         String string;
         if (TextUtils.isEmpty(this.sKey)) {
             string = "全局搜索";
-        } else if (this.sKey.equals("filter__home")) {
+        } else if ("filter__home".equals(this.sKey)) {
             string = "默认源: " + ApiConfig.get().getHomeSourceBean().getName();
         } else {
             SourceBean sourceBean = ApiConfig.get().getSource(this.sKey);
@@ -709,7 +709,7 @@ public class SearchActivity extends BaseActivity {
 
         List<SourceBean> searchRequestList = new ArrayList<>();
 
-        boolean equals = this.sKey.equals("filter__home");
+        boolean equals = "filter__home".equals(this.sKey);
         if (equals) {
             SourceBean home = ApiConfig.get().getHomeSourceBean();
             if (home.isSearchable()) {

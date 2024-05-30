@@ -32,7 +32,7 @@ public class TxtSubscribe {
             LinkedHashMap<String, ArrayList<String>> channelTemp = channel;
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.equals("")) continue;
+                if ("".equals(line)) continue;
                 if (line.startsWith("#EXTM3U")) continue;
                 if (line.startsWith("#EXTINF")) {
                     String name = getStrByRegex(NAME_PATTERN, line);

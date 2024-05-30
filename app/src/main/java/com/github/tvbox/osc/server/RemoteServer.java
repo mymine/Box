@@ -108,7 +108,7 @@ public class RemoteServer extends NanoHTTPD {
                         return process.doResponse(session, fileName, session.getParms(), null);
                     }
                 }
-                if (fileName.equals("/proxy")) {
+                if ("/proxy".equals(fileName)) {
                     Map < String, String > params = session.getParms();
                     params.putAll(session.getHeaders());
                     params.put("request-headers", new Gson().toJson(session.getHeaders()));
@@ -154,7 +154,7 @@ public class RemoteServer extends NanoHTTPD {
                     } catch (Throwable th) {
                         return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.INTERNAL_ERROR, NanoHTTPD.MIME_PLAINTEXT, th.getMessage());
                     }
-                } else if (fileName.equals("/dns-query")) {
+                } else if ("/dns-query".equals(fileName)) {
                     String name = session.getParms().get("name");
                     byte[] rs = null;
                     try {
@@ -163,7 +163,7 @@ public class RemoteServer extends NanoHTTPD {
                         rs = new byte[0];
                     }
                     return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, "application/dns-message", new ByteArrayInputStream(rs), rs.length);
-                } else if (fileName.equals("/m3u8")) {
+                } else if ("/m3u8".equals(fileName)) {
                     return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, m3u8Content);
                 } else if (fileName.startsWith("/dash/")) {
                     String dashData = App.getInstance().getDashData();
@@ -203,7 +203,7 @@ public class RemoteServer extends NanoHTTPD {
                 }
                 try {
                     Map < String, String > params = session.getParms();
-                    if (fileName.equals("/upload")) {
+                    if ("/upload".equals(fileName)) {
                         String path = params.get("path");
                         for (String k: files.keySet()) {
                             if (k.startsWith("files-")) {
@@ -224,7 +224,7 @@ public class RemoteServer extends NanoHTTPD {
                             }
                         }
                         return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "OK");
-                    } else if (fileName.equals("/newFolder")) {
+                    } else if ("/newFolder".equals(fileName)) {
                         String path = params.get("path");
                         String name = params.get("name");
                         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -235,7 +235,7 @@ public class RemoteServer extends NanoHTTPD {
                             if (!flag.exists()) flag.createNewFile();
                         }
                         return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "OK");
-                    } else if (fileName.equals("/delFolder")) {
+                    } else if ("/delFolder".equals(fileName)) {
                         String path = params.get("path");
                         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
                         File file = new File(root + "/" + path);
@@ -243,7 +243,7 @@ public class RemoteServer extends NanoHTTPD {
                             FileUtils.recursiveDelete(file);
                         }
                         return NanoHTTPD.newFixedLengthResponse(NanoHTTPD.Response.Status.OK, NanoHTTPD.MIME_PLAINTEXT, "OK");
-                    } else if (fileName.equals("/delFile")) {
+                    } else if ("/delFile".equals(fileName)) {
                         String path = params.get("path");
                         String root = Environment.getExternalStorageDirectory().getAbsolutePath();
                         File file = new File(root + "/" + path);
@@ -300,7 +300,7 @@ public class RemoteServer extends NanoHTTPD {
                 while (enumerationNi.hasMoreElements()) {
                     NetworkInterface networkInterface = enumerationNi.nextElement();
                     String interfaceName = networkInterface.getDisplayName();
-                    if (interfaceName.equals("eth0") || interfaceName.equals("wlan0")) {
+                    if ("eth0".equals(interfaceName) || "wlan0".equals(interfaceName)) {
                         Enumeration < InetAddress > enumIpAddr = networkInterface.getInetAddresses();
                         while (enumIpAddr.hasMoreElements()) {
                             InetAddress inetAddress = enumIpAddr.nextElement();
@@ -351,7 +351,7 @@ public class RemoteServer extends NanoHTTPD {
         JsonArray result = new JsonArray();
         for (File f: list) {
             if (f.getName().startsWith(".")) {
-                if (f.getName().equals(".tvbox_folder")) {
+                if (".tvbox_folder".equals(f.getName())) {
                     info.addProperty("del", 1);
                 }
                 continue;
